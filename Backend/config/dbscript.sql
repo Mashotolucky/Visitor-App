@@ -32,7 +32,6 @@ CREATE TABLE public.admin(
 );
 
 
-
 ALTER TABLE public.tenant
     ADD FOREIGN KEY (userID)
     REFERENCES public.users (ID)
