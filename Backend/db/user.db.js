@@ -39,7 +39,7 @@ const getUserByEmailDb = async (email) => {
         [email]
     );
     return exists? exists[0]: false;
-}
+} 
 
 const changeUserPasswordDb = async (hashedPassword, email) =>{
     return await pool.query(
@@ -57,7 +57,7 @@ const createUserDb = async ({name,password, email, lastname, role}) =>{
              [name, password, email, lastname, role]
         );
         const myuser = user.rows[0];
-        console.log(myuser);
+        console.log('user db',myuser);
         return myuser;
     } catch (error) {
         console.log(error);

@@ -8,7 +8,7 @@ const corsOptions = {
     origin: '*'
 }
 
-const Port = process.env.PORT || 4200;
+const Port = process.env.PORT || 4000;
 const app_routes = require('./routes');
 
 app.use(cors(corsOptions));

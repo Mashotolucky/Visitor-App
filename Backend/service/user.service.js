@@ -1,6 +1,7 @@
 const {roles} = require('../helpers/constant');
 const {hashPassword, comparePassword} = require('../helpers/password');
 const {generateToken} = require('../middleware/jwt');
+const signupMail = require('../helpers/mailer');
 
 const {
     getUserByEmailDb, 
@@ -32,10 +33,15 @@ class USerService {
                 password: hashedPassword
             };
 
+            const email = {
+                name: my_user.lastname,
+                
+            }
+  
             //create user
-            console.log(user);
+            
             const newuser = await createUserDb(user);
-
+            console.log('user service',newuser);
             //check user role and create TENANT OR ADMIN
             if(newuser.role && newuser.role.toUpperCase() == roles.TENANT){
                 const tenant = await createTenantDb({userID: newuser.id, building: user.building, officeNo: user.officeNo});
