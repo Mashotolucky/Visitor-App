@@ -1,13 +1,13 @@
 const {pool} = require("../config/dbconfig");
 
-const createAdminDb = async ({userID,adminID}) =>{
+const createAdminDb = async ({userID}) =>{
 
     try {
         const admin = await pool.query(
-            `INSERT INTO admin(userID, adminid)
-             VALUES($1, $2)
-             RETURNING userID, adminid`,
-             [userID, adminID]
+            `INSERT INTO admin(userID)
+             VALUES($1)
+             RETURNING userID`,
+             [userID]
         );
         const myAdmin = admin.rows[0];
         console.log(myAdmin);

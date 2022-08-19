@@ -44,12 +44,12 @@ class USerService {
             console.log('user service',newuser);
             //check user role and create TENANT OR ADMIN
             if(newuser.role && newuser.role.toUpperCase() == roles.TENANT){
-                const tenant = await createTenantDb({userID: newuser.id, building: user.building, officeNo: user.officeNo});
+                const tenant = await createTenantDb({userID: newuser.id, building: user.building, rank: user.rank, staff_no: user.staff_no, id_no: user.id_no});
                 return tenant;
             }
             else
             if(newuser.role && newuser.role.toUpperCase() == roles.ADMIN){
-                const admin = await createAdminDb({userID: newuser.id, adminID: user.adminID});
+                const admin = await createAdminDb({userID: newuser.id});
                 return admin;
             }
             else{
