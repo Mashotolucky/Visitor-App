@@ -11,7 +11,7 @@ const {
     getUserByIdDb} = require('../db/user.db');
 
 const {createTenantDb, getAllTenantsDb, getTenantById} = require('../db/tenant.db');
-const {createAdminDb, getAdminById, getAllAdminsDb} = require('../db/admin.db');
+const {createAdminDb, getAdminById, getAllAdminsDb, addVisitorDb} = require('../db/admin.db');
 
 
 class USerService {
@@ -44,12 +44,17 @@ class USerService {
             console.log('user service',newuser);
             //check user role and create TENANT OR ADMIN
             if(newuser.role && newuser.role.toUpperCase() == roles.TENANT){
-                const tenant = await createTenantDb({userID: newuser.id, building: user.building, rank: user.rank, staff_no: user.staff_no, id_no: user.id_no});
+                const tenant = await createTenantDb({userID: newuser.id, building: user.building, rank: user.rank, time_in: user.time_in, time_out: user.time_out, checkedin: user.checkedin});
                 return tenant;
             }
             else
             if(newuser.role && newuser.role.toUpperCase() == roles.ADMIN){
                 const admin = await createAdminDb({userID: newuser.id});
+                return admin;
+            }
+            else
+            if(newuser.role && newuser.role.toUpperCase() == roles.VISITOR){
+                const admin = await addVisitorDb({userID: newuser.id});
                 return admin;
             }
             else{

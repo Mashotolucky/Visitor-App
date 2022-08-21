@@ -1,13 +1,13 @@
 const {pool} = require("../config/dbconfig");
 
-const createTenantDb = async ({userID,building,rank, staff_no, id_no}) =>{
+const createTenantDb = async ({userID,building,rank, time_in, time_out, checkedin}) =>{
 
     try {
         const tenant = await pool.query(
-            `INSERT INTO tenant(userID, building, rank, staff_no, id_no)
-             VALUES($1, $2, $3, $4, $5)
-             RETURNING userID, rank, staff_no`,
-             [userID, building, rank, staff_no, id_no]
+            `INSERT INTO tenant(userID, building, rank, time_in, time_out, checkedin)
+             VALUES($1, $2, $3, $4, $5, $6)
+             RETURNING userID, rank, time_in, time_out, checkedin`,
+             [userID, building, rank, time_in, time_out, checkedin]
         );
         const mytenant = tenant.rows[0];
         console.log(mytenant);

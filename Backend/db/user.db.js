@@ -48,13 +48,13 @@ const changeUserPasswordDb = async (hashedPassword, email) =>{
     );
 };
 
-const createUserDb = async ({name,password, email, lastname, role}) =>{
+const createUserDb = async ({name,password, email, lastname, role, stuff_no, id_no, phoneNumber}) =>{
     try {
         const user = await pool.query(
-            `INSERT INTO users(name, password, email,lastname,role)
-             VALUES($1, $2, $3, $4, $5)
-             RETURNING ID, name, lastname, email, role, created_at`,
-             [name, password, email, lastname, role]
+            `INSERT INTO users(name, password, email,lastname,role,stuff_no, id_no, phoneNumber)
+             VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+             RETURNING ID, name, lastname, email, role, stuff_no, id_no, phoneNumber, created_at`,
+             [name, password, email, lastname, role, stuff_no, id_no, phoneNumber]
         );
         const myuser = user.rows[0];
         console.log('user db',myuser);

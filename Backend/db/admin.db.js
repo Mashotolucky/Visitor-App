@@ -40,8 +40,25 @@ const getAdminById = async (id) => {
     return admin[0]
 };
 
+const addVisitorDb = async (tenantID, name, lastname, id_no, phoneNumber, time_in, time_out, checkedout) =>{
+    try {
+        const visitor = pool.query(
+            `INSERT INTO visitor(tenantid, name, lastname, id_no, phonenumber, time_in, time_out, checkedout)
+             VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+             RETURNING *`,
+             [tenantID, name, lastname, id_no, phoneNumber, time_in, time_out, checkedout]
+        );
+
+        console.log(visitor.rows[0]);
+        return visitor.rows[0];
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     createAdminDb,
     getAllAdminsDb,
-    getAdminById
+    getAdminById,
+    addVisitorDb
 }
