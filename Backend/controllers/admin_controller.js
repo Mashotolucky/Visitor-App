@@ -5,7 +5,6 @@ const addVisitor = async (req, res, next) =>{
         if(!req.body.tenantID){return next(new Error("Choose tenant"));}
 
         if(!req.body){return next(new Error("all fields required"));}
-        console.log(req.body);
     
         const { name, lastname, phoneNumber, tenantID, id_no, time_in, time_out, checkedout } = req.body;
         let data = {};
@@ -26,8 +25,8 @@ const addVisitor = async (req, res, next) =>{
         
 
 
-        const visitor = await addVisitorDb(tenantID, name, lastname, phoneNumber, id_no, time_in, time_out, checkedout)
-        return res.status(200).send(visitor);
+        const visitor = await addVisitorDb(data)
+        return res.sendStatus(200);
     } catch (error) {
         next(error);
     }
