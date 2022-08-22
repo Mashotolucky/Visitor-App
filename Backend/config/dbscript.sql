@@ -38,8 +38,10 @@ CREATE TABLE public.admin(
 
 CREATE TABLE public.visitor(
     ID serial NOT NULL,
-    userID integer,
     tenantID integer,
+    name varchar(100),
+	lastname varchar(100),
+    id_no varchar(100),
     time_in time,
     time_out time,
     checkedout boolean,
@@ -57,12 +59,6 @@ ALTER TABLE public.tenant
 
 
 ALTER TABLE public.admin
-    ADD FOREIGN KEY (userID)
-    REFERENCES public.users (ID)
-    ON DELETE CASCADE
-    NOT VALID;
-
-ALTER TABLE public.visitor
     ADD FOREIGN KEY (userID)
     REFERENCES public.users (ID)
     ON DELETE CASCADE
