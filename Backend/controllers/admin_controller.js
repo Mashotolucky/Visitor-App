@@ -22,7 +22,6 @@ const addVisitor = async (req, res, next) =>{
         console.log("data",data);
         if ( !data.name || !data.lastname || !data.id_no)
             return res.status(400).json({ message: `Missing/empty field found`, ...data });
-        
 
 
         const visitor = await addVisitorDb(data)

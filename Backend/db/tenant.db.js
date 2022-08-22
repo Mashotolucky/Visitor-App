@@ -22,7 +22,7 @@ const getAllTenantsDb = async () =>{
         const tenants = await pool.query(
             "select * from users, tenant where users.ID = tenant.userID ORDER BY users.name"  
         );
-        const allTenants = tenants.rows[0];
+        const allTenants = tenants.rows;
         console.log(allTenants);
 
         return allTenants;
