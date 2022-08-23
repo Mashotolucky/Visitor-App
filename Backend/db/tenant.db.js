@@ -17,10 +17,101 @@ const createTenantDb = async ({userID,building,rank, time_in, time_out, checkedi
     }
 };
 
+// const checkedinDb = async ({time_in, checkedin, stuff_no}) =>{
+//     try {
+//         const tenants = await pool.query(
+//             `UPDATE tenant
+//              SET time_in = $1, checkedin = $2
+//              WHERE (SELECT users.stuff_no
+//                     FROM users, tenant
+//                     WHERE users.id = tenant.userid
+//                     AND users.stuff_no = $3) = $3
+//              RETURNING *`,[time_in, checkedin, stuff_no]  
+//         );
+//         const tenant = tenants.rows[0];
+//         console.log(tenant);
+
+//         return tenant;
+//     } catch (error) {
+//         throw error;
+//     }
+// }
+
+const checkedinDb = async ({time_in, checkedin, userid}) =>{
+    try {
+        const tenants = await pool.query(
+            `UPDATE tenant
+             SET time_in = $1, checkedin = $2
+             WHERE userid = $3
+             RETURNING *`,[time_in, checkedin, userid]  
+        );
+        const tenant = tenants.rows[0];
+        console.log(tenant);
+
+        return tenant;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// const checkedoutDb = async ({time_out, checkedin, stuff_no}) =>{
+//     try {
+//         const tenants = await pool.query(
+//             `UPDATE tenant
+//              SET time_out = $1, checkedin = $2
+//              WHERE (SELECT users.stuff_no
+//                     FROM users, tenant
+//                     WHERE users.id = tenant.userid
+//                     AND users.stuff_no = $3) = $3
+//              RETURNING *`,[time_out, checkedin, stuff_no]  
+//         );
+//         const tenant = tenants.rows[0];
+//         console.log(tenant);
+
+//         return tenant;
+//     } catch (error) {
+//         throw error;
+//     }
+// }
+
+const checkedoutDb = async ({time_out, checkedin, userid}) =>{
+    try {
+        const tenants = await pool.query(
+            `UPDATE tenant
+             SET time_out = $1, checkedin = $2
+             WHERE userid = $3
+             RETURNING *`,[time_out, checkedin, userid]  
+        );
+        const tenant = tenants.rows[0];
+        console.log(tenant);
+
+        return tenant;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const getAllTenantsDb = async () =>{
     try {
         const tenants = await pool.query(
             "select * from users, tenant where users.ID = tenant.userID ORDER BY users.name"  
+        );
+        const allTenants = tenants.rows;
+        console.log(allTenants);
+
+        return allTenants;
+    } catch (error) {
+        throw error;
+    }
+};
+
+const getTenantsCheckedInDb = async () =>{
+    try {
+        const tenants = await pool.query(
+            `select * from users, tenant 
+             where users.ID = tenant.userID 
+             AND tenant.checkedin = true 
+             ORDER BY users.name` 
         );
         const allTenants = tenants.rows;
         console.log(allTenants);
@@ -43,5 +134,8 @@ const getTenantById = async (id) => {
 module.exports = {
     createTenantDb,
     getAllTenantsDb,
-    getTenantById
+    getTenantsCheckedInDb,
+    getTenantById,
+    checkedinDb,
+    checkedoutDb
 }
