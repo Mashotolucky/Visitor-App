@@ -41,17 +41,17 @@ const getAdminById = async (id) => {
 };
 
 const addVisitorDb = async ({tenantID, name, lastname, id_no, phoneNumber, time_in, time_out, checkedout}) =>{
-    console.log('db',{tenantID, name, lastname, id_no, phoneNumber, time_in, time_out, checkedout});
+    // console.log('db',{tenantID, name, lastname, id_no, phoneNumber, time_in, time_out, checkedout});
     try {
         const visitor = pool.query(
             `INSERT INTO visitor(tenantid, name, lastname, id_no, phonenumber, time_in, time_out, checkedout)
              VALUES($1, $2, $3, $4, $5, $6, $7, $8)
-             RETURNING name, lastname, id_no, phonenumber`,
+             RETURNING *`,
              [tenantID, name, lastname, id_no, phoneNumber, time_in, time_out, checkedout]
         );
 
-        // console.log('db',visitor.rows);
-        return 1;
+        console.log('db',(await visitor).rows[0]);
+        return (await visitor).rows[0];
     } catch (error) {
         throw error;
     }

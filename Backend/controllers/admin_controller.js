@@ -25,7 +25,7 @@ const addVisitor = async (req, res, next) =>{
 
 
         const visitor = await addVisitorDb(data)
-        return res.sendStatus(200);
+        return res.status(200).send(visitor);
     } catch (error) {
         next(error);
     }
