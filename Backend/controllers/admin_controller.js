@@ -1,4 +1,4 @@
-const {addVisitorDb} = require('../db/admin.db');
+const {addVisitorDb, getALLCheckedInVisitorDb, checkedoutVisitorDb} = require('../db/admin.db');
 
 const addVisitor = async (req, res, next) =>{
     try {
@@ -31,6 +31,28 @@ const addVisitor = async (req, res, next) =>{
     }
 }
 
+const getALLCheckedInVisitor = async (req, res, next) =>{
+    try {
+        const visitors = await getALLCheckedInVisitorDb();
+        return res.status(200).send(visitors);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const checkedoutVisitor = async (req, res, next)=>{
+    if(!req.body){return next(new Error('Missing values!'));}
+
+    try {
+        const data = req.body;
+
+        const visitor = await checkedoutVisitorDb(data);
+        return res.status(200).send(visitor);
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
-    addVisitor
+    addVisitor, getALLCheckedInVisitor, checkedoutVisitor
 }

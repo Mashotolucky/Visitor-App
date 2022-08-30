@@ -57,9 +57,40 @@ const addVisitorDb = async ({tenantID, name, lastname, id_no, phoneNumber, time_
     }
 }
 
+const getALLCheckedInVisitorDb = async ()=>{
+    try {
+        const visitors = await pool.query(
+            `SELECT * FROM visitor
+             WHERE checkedout = false`
+        );
+        return visitors.rows;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const checkedoutVisitorDb = async ({time_out, checkedout, id}) =>{
+    try {
+        const tenants = await pool.query(
+            `UPDATE visitor
+             SET time_out = $1, checkedout = $2
+             WHERE id = $3
+             RETURNING *`,[time_out, checkedout, id]  
+        );
+        const tenant = tenants.rows[0];
+        console.log(tenant);
+
+        return tenant;
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     createAdminDb,
     getAllAdminsDb,
     getAdminById,
-    addVisitorDb
+    addVisitorDb,
+    getALLCheckedInVisitorDb,
+    checkedoutVisitorDb
 }
