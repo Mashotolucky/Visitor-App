@@ -72,3 +72,7 @@ ALTER TABLE public.visitor
 
 CREATE UNIQUE INDEX users_unique_lower_email_idx
     ON public.users (lower(email));
+
+
+INSERT INTO users(name,lastname,email,phoneNumber,password,role) 
+VALUES('Thabo','Sodi','thabosodi11@gmail.com','0812345678','12345678','ADMIN');
