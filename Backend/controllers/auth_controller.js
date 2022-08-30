@@ -1,6 +1,8 @@
 const USerService = require('../service/user.service');
 const { roles } = require('../helpers/constant');
 const userService = require('../service/user.service');
+const sendMail = require('../helpers/sendMail');
+const welcome = require('../helpers/welcome');
 
 const login = async (req, res, next) => {
     try {
@@ -50,6 +52,27 @@ const register = async (req, res, next) => {
         const user = await USerService.createUser(data);
 
         if(!user) return res.status(500).send("Something went wrong");
+
+        const Data = {
+            name: data.lastname,
+            appname: 'SAPS ADMIN',
+            url: 'http://localhost:4200/'
+        };
+
+        const welcomeMessage = welcome(Data);
+
+        const message = {
+            to: data.email,
+            from: {
+                name: 'SAPS ADMIN',
+                email: 'ntulibrian93@gmail.com'
+            },
+            subject: 'Welcome to SAPS ',
+            html: welcomeMessage
+        };
+
+        const mailer = await sendMail(message);
+        if(mailer) {console.log('Email sent');}
 
         return res.status(200).send(user);
     }catch(error){
