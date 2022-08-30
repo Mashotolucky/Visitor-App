@@ -1,4 +1,4 @@
-const {getAllTenantsDb, getTenantsCheckedInDb, checkedinDb, checkedoutDb} = require('../db/tenant.db');
+const {getAllTenantsDb, getTenantsCheckedInDb, checkedinDb, checkedoutDb, searchTenantsDb} = require('../db/tenant.db');
 
 const getAllTenants = async (req, res, next) =>{
     try {
@@ -45,9 +45,23 @@ const checkedout = async (req, res, next) =>{
     }
 }
 
+const searchTenants = async (req, res, next) =>{
+    if(!req.params){return next(new Error('Missing search values!'));}
+
+    try {
+        const name = req.params.name;
+        console.log(name);
+        const tenants = await searchTenantsDb(name);
+        return res.status(200).send(tenants);
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     getAllTenants,
     getTenantsCheckedIn,
     checkedin,
-    checkedout
+    checkedout,
+    searchTenants
 }

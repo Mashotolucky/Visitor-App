@@ -131,11 +131,28 @@ const getTenantById = async (id) => {
     return tenant[0]
 };
 
+const searchTenantsDb = async (name) =>{
+    try {
+        const tenants = await pool.query(
+           `select * from users, tenant 
+            where users.ID = tenant.userID 
+            AND users.stuff_no LIKE $1
+            OR users.name LIKE $1
+            OR users.lastname = $1
+            ORDER BY users.name`,[name]
+        );
+        return tenants.rows;
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     createTenantDb,
     getAllTenantsDb,
     getTenantsCheckedInDb,
     getTenantById,
     checkedinDb,
-    checkedoutDb
+    checkedoutDb,
+    searchTenantsDb
 }
