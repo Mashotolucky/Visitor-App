@@ -1,8 +1,38 @@
-GET http://localhost:4000/api/visitor/tenant/search/23254678 HTTP/1.1
+
+POST http://localhost:4000/api/visitor/admin/visitor/add HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "faith"
+    "tenantID": 5, 
+    "name": "Thabang", 
+    "lastname": "Bafana", 
+    "id_no": "0003254698732", 
+    "phonenumber": "0654879242", 
+    "time_in": "09:05", 
+    "time_out": null, 
+    "checkedout": true
 }
 
 ###
+
+GET http://localhost:4000/api/visitor/tenant/total HTTP/1.1
+
+###
+
+
+
+POST http://localhost:4000/api/visitor/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "building": "Drostdy",
+    "email": "mashotolucky99@gmail.com",
+    "id_no": 901245369744865,
+    "lastname": "Molefe",
+    "name": "Mash",
+    "password": "12345678",
+    "phoneNumber": 637231425,
+    "rank": "Captain",
+    "role": "TENANT",
+    "stuff_no": 2202123
+}

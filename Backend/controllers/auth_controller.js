@@ -65,7 +65,7 @@ const register = async (req, res, next) => {
             to: data.email,
             from: {
                 name: 'SAPS ADMIN',
-                email: 'ntulibrian93@gmail.com'
+                email: '219660006@tut4life.ac.za'
             },
             subject: 'Welcome to SAPS ',
             html: welcomeMessage
@@ -73,8 +73,9 @@ const register = async (req, res, next) => {
 
         const mailer = await sendMail(message);
         if(mailer) {console.log('Email sent');}
+        
 
-        return res.status(200).send(user);
+        return res.status(200).send(mailer);
     }catch(error){
         next(error);
     }

@@ -60,9 +60,12 @@ const addVisitorDb = async ({tenantID, name, lastname, id_no, phoneNumber, time_
 const getALLCheckedInVisitorDb = async ()=>{
     try {
         const visitors = await pool.query(
-            `SELECT * FROM visitor
-             WHERE checkedout = false`
+            `SELECT *
+             FROM visitor 
+             WHERE visitor.checkedout = false
+             `
         );
+        
         return visitors.rows;
     } catch (error) {
         throw error;

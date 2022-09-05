@@ -105,6 +105,20 @@ const getAllTenantsDb = async () =>{
     }
 };
 
+const getTotalTenantsDb = async () =>{
+    try {
+        const tenants = await pool.query(
+            "select * from users, tenant where users.ID = tenant.userID ORDER BY users.name"  
+        );
+        const allTenants = tenants.rowCount;
+        console.log("number", allTenants);
+
+        return allTenants;
+    } catch (error) {
+        throw error;
+    }
+};
+
 const getTenantsCheckedInDb = async () =>{
     try {
         const tenants = await pool.query(
@@ -150,9 +164,11 @@ const searchTenantsDb = async (name) =>{
 module.exports = {
     createTenantDb,
     getAllTenantsDb,
+    getTotalTenantsDb,
     getTenantsCheckedInDb,
     getTenantById,
     checkedinDb,
     checkedoutDb,
-    searchTenantsDb
+    searchTenantsDb,
+
 }

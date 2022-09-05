@@ -16,7 +16,7 @@ const addVisitor = async (req, res, next) =>{
             id_no: id_no ? Number(id_no) : null,
             time_in: time_in ? String(time_in) : null,
             time_out: time_out ? String(time_out) : null,
-            checkedout: checkedout ? Boolean(checkedout) : null
+            checkedout: checkedout ? Boolean(checkedout) : false
         }
 
         console.log("data",data);

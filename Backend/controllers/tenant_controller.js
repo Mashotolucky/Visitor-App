@@ -1,10 +1,20 @@
-const {getAllTenantsDb, getTenantsCheckedInDb, checkedinDb, checkedoutDb, searchTenantsDb} = require('../db/tenant.db');
+const {getAllTenantsDb, getTotalTenantsDb, getTenantsCheckedInDb, checkedinDb, checkedoutDb, searchTenantsDb} = require('../db/tenant.db');
 
 const getAllTenants = async (req, res, next) =>{
     try {
         const tenants = await getAllTenantsDb();
 
         return res.status(200).send(tenants);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const getTotalTenants = async (req, res, next) =>{
+    try {
+        const tenants = await getTotalTenantsDb();
+
+        return res.sendStatus(200);
     } catch (error) {
         next(error);
     }
@@ -60,6 +70,7 @@ const searchTenants = async (req, res, next) =>{
 
 module.exports = {
     getAllTenants,
+    getTotalTenants,
     getTenantsCheckedIn,
     checkedin,
     checkedout,
